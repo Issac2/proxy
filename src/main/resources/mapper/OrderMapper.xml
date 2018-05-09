@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.minuor.aop.dao.OrderDao">
+
+
+    <insert id="insert">
+        insert into t_order_info
+        (order_id,user_id,phone,amount)
+        values
+        (#{model.orderId},#{model.userId},#{model.phone},#{model.amount})
+    </insert>
+</mapper>

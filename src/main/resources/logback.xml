@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:noNamespaceSchemaLocation="http://www.padual.com/java/logback.xsd">
+    <!-- 控制台 appender -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>booking-manage-api %X{sessionId} %p [%t] %d %c %M %L: %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- info日志 appender  -->
+    <appender name="info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/data1/logs/java_release/booking-manage/logs/booking-manage-info-api.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                /data1/logs/java_release/booking-manage/logs/booking-manage-info-api.%d{yyyy-MM-dd}.logx
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>booking-manage-api %X{sessionId} %p [%t] %d %c %M %L: %m%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印正确日志 -->
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <!-- 出错日志 appender  -->
+    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/data1/logs/java_release/booking-manage/logs/booking-manage-error-api.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                /data1/logs/java_release/booking-manage/logs/booking-manage-error-api.%d{yyyy-MM-dd}.logx
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>booking-manage-api %X{sessionId} %p [%t] %d %c %M %L: %m%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 3rd party loggers begin -->
+    <logger name="org.springframework" additivity="true" level="info"/>
+    <logger name="org.mybatis" additivity="true" level="info"/>
+    <logger name="org.apache" additivity="true" level="info"/>
+    <logger name="java.sql.Connection" additivity="true" level="info"/>
+    <logger name="java.sql.Statement" additivity="true" level="info"/>
+    <logger name="java.sql.PreparedStatement" additivity="true" level="info"/>
+    <logger name="java.sql.ResultSet" additivity="true" level="info"/>
+    <logger name="com.alibaba.druid" additivity="true" level="info"/>
+    <!-- 3rd party loggers end -->
+
+
+    <!--控制台打印资源加载信息-->
+    <root level="info">
+        <appender-ref ref="console"/>
+        <appender-ref ref="info"/>
+        <appender-ref ref="error"/>
+    </root>
+</configuration>
